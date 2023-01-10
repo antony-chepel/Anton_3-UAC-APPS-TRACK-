@@ -17,11 +17,6 @@
 -dontwarn com.squareup.okhttp.**
 -dontwarn okhttp3.**
 
-#Hawk
--keepclassmembers @com.facebook.crypto.proguard.annotations.KeepGettersAndSetters class * {
-  void set*(***);
-  *** get*();
-}
 
 #Dagger
 -keep class javax.inject.** { *; }

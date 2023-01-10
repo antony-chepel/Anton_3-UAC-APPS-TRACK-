@@ -3,7 +3,6 @@ package com.skgames.trafficridert
 import android.app.Application
 import com.my.tracker.MyTracker
 import com.onesignal.OneSignal
-import com.orhanobut.hawk.Hawk
 import dagger.hilt.android.HiltAndroidApp
 import java.util.*
 
@@ -29,9 +28,9 @@ class AppClass : Application() {
         OneSignal.initWithContext(this)
         OneSignal.setAppId(oneSignal)
 
-        Hawk.init(this).build()
         val iowkd = getSharedPreferences("PREFS_NAME", 0)
-
+        val sharedInstId = getSharedPreferences(awospdlsldxkkzc, MODE_PRIVATE)
+        val sharedMyID = getSharedPreferences(kdoslx, MODE_PRIVATE)
         val apsol = MyTracker.getTrackerParams()
         val njicv = MyTracker.getTrackerConfig()
         val yuirkkodfmovx = MyTracker.getInstanceId(this)
@@ -39,12 +38,12 @@ class AppClass : Application() {
         if (iowkd.getBoolean("my_first_time", true)) {
             val hjmbv = UUID.randomUUID().toString()
             apsol.setCustomUserId(hjmbv)
-            Hawk.put(kdoslx, hjmbv)
-            Hawk.put(awospdlsldxkkzc, yuirkkodfmovx)
+            sharedMyID.edit().putString(kdoslx,hjmbv).apply()
+            sharedInstId.edit().putString(awospdlsldxkkzc,yuirkkodfmovx).apply()
             iowkd.edit().putBoolean("my_first_time", false).apply()
 
         } else {
-            val wosplx = Hawk.get(kdoslx, "null")
+            val wosplx = sharedMyID.getString(kdoslx,"null")
             apsol.setCustomUserId(wosplx)
         }
         MyTracker.initTracker(tracker, this)

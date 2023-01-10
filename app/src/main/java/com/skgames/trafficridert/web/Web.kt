@@ -16,6 +16,7 @@ import android.util.Log
 import android.webkit.*
 import android.widget.Toast
 import com.appsflyer.AppsFlyerLib
+import com.skgames.trafficridert.AppClass
 
 
 import org.json.JSONException
@@ -25,7 +26,6 @@ import java.io.File
 
 
 
-import com.orhanobut.hawk.Hawk
 import com.skgames.trafficridert.AppClass.Companion.appsChecker
 import com.skgames.trafficridert.AppClass.Companion.awospdlsldxkkzc
 import com.skgames.trafficridert.AppClass.Companion.kdoslx
@@ -288,18 +288,24 @@ class Web : AppCompatActivity() {
 
         val uasdhasdojiasd = getSharedPreferences("SP_WEBVIEW_PREFS", AppCompatActivity.MODE_PRIVATE)
 
-        val xxklc:String? = Hawk.get(weopslsamkx, "null")
-        val sadokosadkoasdko: String? = Hawk.get(kdoslx, "null")
-        val qpsooasdkosdo: String? = Hawk.get(awospdlsldxkkzc, "null")
+
+       val sharedAppsCheck = getSharedPreferences(appsChecker, MODE_PRIVATE)
+       val sharedlink = getSharedPreferences(AppClass.link, MODE_PRIVATE)
+       val sharedMyID = getSharedPreferences(AppClass.kdoslx, MODE_PRIVATE)
+       val sharedInstId = getSharedPreferences(AppClass.awospdlsldxkkzc, MODE_PRIVATE)
+       val sharedNaming= getSharedPreferences(weopslsamkx, MODE_PRIVATE)
+        val xxklc:String? = sharedNaming.getString(weopslsamkx,"null")
+        val sadokosadkoasdko: String? = sharedMyID.getString(kdoslx,"null")
+        val qpsooasdkosdo: String? = sharedInstId.getString(awospdlsldxkkzc,"null")
 
 
-        val xzllllckookasoc: String = Hawk.get(appsChecker, "null")
-        val vkkvmc: String? = Hawk.get(sadokosadkoasdko, "null")
+        val xzllllckookasoc: String? = sharedAppsCheck.getString(appsChecker,"null")
+        val vkkvmc: String? = sharedMyID.getString(kdoslx,"null")
         val sdoodssadko = AppsFlyerLib.getInstance().getAppsFlyerUID(this)
 
         AppsFlyerLib.getInstance().setCollectAndroidID(true)
 
-        val eisaisdj = Hawk.get(link, "null")
+        val eisaisdj = sharedlink.getString(link,"null")
         val qospps = Build.VERSION.RELEASE
 
         var vjkcvo: String = ""

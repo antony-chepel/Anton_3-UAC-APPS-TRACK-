@@ -1,6 +1,7 @@
 package com.skgames.trafficridert
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
-import com.orhanobut.hawk.Hawk
 import com.skgames.trafficridert.AppClass.Companion.appsChecker
 import com.skgames.trafficridert.AppClass.Companion.eus
 import com.skgames.trafficridert.AppClass.Companion.weopslsamkx
@@ -31,11 +31,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var pdolc: ActivityMainBinding
 
     private val onyxViewModel : OnyxViewModel by viewModels()
+    private lateinit var sharedlink : SharedPreferences
+    private lateinit var sharedAppsCheck : SharedPreferences
+    private lateinit var sharedMainId : SharedPreferences
+    private lateinit var sharedNaming : SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pdolc = ActivityMainBinding.inflate(layoutInflater)
         setContentView(pdolc.root)
+
+        sharedAppsCheck = getSharedPreferences(appsChecker, MODE_PRIVATE)
+        sharedlink = getSharedPreferences(AppClass.link, MODE_PRIVATE)
+        sharedMainId = getSharedPreferences(eus, MODE_PRIVATE)
+        sharedNaming= getSharedPreferences(weopslsamkx, MODE_PRIVATE)
         networkJob()
         lifecycleScope.launch {
             AppsFlyerLib.getInstance()
@@ -53,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         eusi.start()
         val clozxck = eusi.info.id
         Log.d("getAdvertisingId = ", clozxck.toString())
-        Hawk.put(eus, clozxck)
+        sharedMainId.edit().putString(eus,clozxck).apply()
     }
 
 
@@ -76,8 +86,8 @@ class MainActivity : AppCompatActivity() {
                                val linkus = it.data.body()?.view
                                val appscheking = it.data.body()?.appsChecker
                                geo = it.data.body()?.geo.toString()
-                               Hawk.put(AppClass.link,linkus)
-                               Hawk.put(appsChecker,appscheking)
+                               sharedlink.edit().putString(AppClass.link,linkus).apply()
+                               sharedAppsCheck.edit().putString(appsChecker,appscheking).apply()
                                checker()
 
                            }
@@ -105,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     private val eusuixj = object : AppsFlyerConversionListener {
         override fun onConversionDataSuccess(fidosood: MutableMap<String, Any>?) {
             val boppdf = fidosood?.get("campaign").toString()
-            Hawk.put(weopslsamkx, boppdf)
+            sharedNaming.edit().putString(weopslsamkx,boppdf).apply()
         }
 
         override fun onConversionDataFail(p0: String?) {
@@ -120,8 +130,8 @@ class MainActivity : AppCompatActivity() {
     }
     private fun checker(){
         lifecycleScope.launch(Dispatchers.IO) {
-            val xlcopc = Hawk.get(appsChecker, "null")
-            var rodop: String? = Hawk.get(weopslsamkx)
+            val xlcopc = sharedAppsCheck.getString(appsChecker,"null")
+            var rodop: String? = sharedNaming.getString(weopslsamkx,"null")
             lobpocvookd()
             if (xlcopc == "1") {
                 val fidofko = Executors.newSingleThreadScheduledExecutor()
@@ -139,7 +149,7 @@ class MainActivity : AppCompatActivity() {
                             finish()
                         }
                     } else {
-                        rodop = Hawk.get(weopslsamkx)
+                        rodop = sharedNaming.getString(weopslsamkx,"null")
                         Log.d("TestInUIHawk", "Received null $rodop")
                     }
 
