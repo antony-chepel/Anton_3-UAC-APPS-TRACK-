@@ -5,6 +5,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.onesignal.OneSignal
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -23,25 +24,15 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 
+import com.skgames.trafficridert.AppClass.Companion.deep
+import com.skgames.trafficridert.AppClass.Companion.eus
+import com.skgames.trafficridert.AppClass.Companion.instId
 
-
-
-import com.skgames.trafficridert.AppClass.Companion.appsChecker
-import com.skgames.trafficridert.AppClass.Companion.awospdlsldxkkzc
-import com.skgames.trafficridert.AppClass.Companion.kdoslx
 import com.skgames.trafficridert.AppClass.Companion.link
+import com.skgames.trafficridert.AppClass.Companion.myId
 import com.skgames.trafficridert.AppClass.Companion.weopslsamkx
 import com.skgames.trafficridert.R
 import com.skgames.trafficridert.databinding.ActivityNysjwkkeBinding
-import com.skgames.trafficridert.utils.Constance.blovcblbpblplvb
-import com.skgames.trafficridert.utils.Constance.bnbnbnbnudsfsdf
-import com.skgames.trafficridert.utils.Constance.jnuasdh
-import com.skgames.trafficridert.utils.Constance.rdtdsy
-import com.skgames.trafficridert.utils.Constance.wokkodakopskodp
-import com.skgames.trafficridert.utils.Constance.wsoodsdp
-import com.skgames.trafficridert.utils.Constance.zloxp
-import com.skgames.trafficridert.utils.Constance.zoxpcl
-
 
 import java.io.IOException
 
@@ -288,39 +279,70 @@ class Web : AppCompatActivity() {
 
         val uasdhasdojiasd = getSharedPreferences("SP_WEBVIEW_PREFS", AppCompatActivity.MODE_PRIVATE)
 
-
-       val sharedAppsCheck = getSharedPreferences(appsChecker, MODE_PRIVATE)
        val sharedlink = getSharedPreferences(AppClass.link, MODE_PRIVATE)
-       val sharedMyID = getSharedPreferences(AppClass.kdoslx, MODE_PRIVATE)
-       val sharedInstId = getSharedPreferences(AppClass.awospdlsldxkkzc, MODE_PRIVATE)
+       val sharedMainId = getSharedPreferences(eus, MODE_PRIVATE)
+       val sharedMyID = getSharedPreferences(AppClass.myId, MODE_PRIVATE)
+       val sharedInstId = getSharedPreferences(AppClass.instId, MODE_PRIVATE)
        val sharedNaming= getSharedPreferences(weopslsamkx, MODE_PRIVATE)
-        val xxklc:String? = sharedNaming.getString(weopslsamkx,"null")
-        val sadokosadkoasdko: String? = sharedMyID.getString(kdoslx,"null")
-        val qpsooasdkosdo: String? = sharedInstId.getString(awospdlsldxkkzc,"null")
+       val sharedDeep= getSharedPreferences(deep, MODE_PRIVATE)
 
 
-        val xzllllckookasoc: String? = sharedAppsCheck.getString(appsChecker,"null")
-        val vkkvmc: String? = sharedMyID.getString(kdoslx,"null")
-        val sdoodssadko = AppsFlyerLib.getInstance().getAppsFlyerUID(this)
+        val sharPre = getSharedPreferences("SHARED_PREF",
+            Context.MODE_PRIVATE)
 
+        val pack = "com.skgames.trafficridert"
+
+        val intent = intent
+        val str = intent.getStringExtra("WebInt")
+
+
+        val myTrId = sharedMyID.getString(myId, null)
+        val myInstId: String? = sharedInstId.getString(instId, null)
+        val cpOne: String? = sharedNaming.getString(weopslsamkx, null)
+        val dpOne: String? = sharedDeep.getString(deep, null)
+        val mainId: String? = sharedMainId.getString(eus, "null")
+        val afId = AppsFlyerLib.getInstance().getAppsFlyerUID(this)
         AppsFlyerLib.getInstance().setCollectAndroidID(true)
 
-        val eisaisdj = sharedlink.getString(link,"null")
-        val qospps = Build.VERSION.RELEASE
 
-        var vjkcvo: String = ""
-        if (xzllllckookasoc == "1"){
-            vjkcvo =
-                "$eisaisdj$rdtdsy$xxklc&$jnuasdh$sdoodssadko&$zoxpcl$vkkvmc&$wsoodsdp$wokkodakopskodp&$zloxp$qospps&$bnbnbnbnudsfsdf$blovcblbpblplvb"
-            sudhhusndajnasdnj(sdoodssadko.toString())
-        } else {
-            vjkcvo =
-                "$eisaisdj$jnuasdh$sadokosadkoasdko&$zoxpcl$qpsooasdkosdo&$wsoodsdp$wokkodakopskodp&$zloxp$qospps&$bnbnbnbnudsfsdf$blovcblbpblplvb"
-            sudhhusndajnasdnj(sadokosadkoasdko.toString())
+        val one = "deviceID="
+        val subOne = "sub_id_1="
+        val thrhtrhtrhtrht = "ad_id="
+        val fofofofofofofofofo = "sub_id_4="
+        val fififififififififif = "sub_id_5="
+        val sisisisifsisis = "sub_id_6="
+
+
+        val lololololololo = "naming"
+        val trololo = "deeporg"
+
+
+        val kiokjjlikjhmkij = Build.VERSION.RELEASE
+
+        val linkAB: String? = sharedlink.getString(link, null)
+
+        var aft = ""
+
+        when (str) {
+            "MT" -> {
+                aft =
+                    "$linkAB$one$myTrId&$thrhtrhtrhtrht$myInstId&$fofofofofofofofofo$pack&$fififififififififif$kiokjjlikjhmkij&$sisisisifsisis$lololololololo"
+                sudhhusndajnasdnj(myTrId.toString())
+                Log.d("TESTAG", "urururururururur tracker: $aft")
+            }
+            "deepLink" -> {
+                aft ="$linkAB$subOne$dpOne&$one$afId&$thrhtrhtrhtrht$mainId&$fofofofofofofofofo$pack&$fififififififififif$kiokjjlikjhmkij&$sisisisifsisis$trololo"
+                sudhhusndajnasdnj(myTrId.toString())
+                Log.d("TESTAG", "urururururururur deep: $aft")
+            }
+            "campaign" -> {
+                aft =
+                    "$linkAB$subOne$cpOne&$one$afId&$thrhtrhtrhtrht$mainId&$fofofofofofofofofo$pack&$fififififififififif$kiokjjlikjhmkij&$sisisisifsisis$lololololololo"
+                sudhhusndajnasdnj(afId.toString())
+                Log.d("TESTAG", "urururururururur apps: $aft")
+            }
         }
-
-        Log.d("TESTAG", "Test Result $vjkcvo")
-        return uasdhasdojiasd.getString("SAVED_URL", vjkcvo).toString()
+        return sharPre.getString("SAVED_URL", aft).toString()
     }
     private fun sudhhusndajnasdnj(cixicj: String) {
         OneSignal.setExternalUserId(
@@ -381,14 +403,14 @@ class Web : AppCompatActivity() {
 
             if (ablcxdf == "") {
                 ablcxdf = getSharedPreferences(
-                    "SP_WEBVIEW_PREFS",
+                    "SHARED_PREF",
                     AppCompatActivity.MODE_PRIVATE
                 ).getString(
                     "SAVED_URL",
                     clvxcov
                 ).toString()
 
-                val sidjasji = getSharedPreferences("SP_WEBVIEW_PREFS", AppCompatActivity.MODE_PRIVATE)
+                val sidjasji = getSharedPreferences("SHARED_PREF", AppCompatActivity.MODE_PRIVATE)
                 val qposdlkkd = sidjasji.edit()
                 qposdlkkd.putString("SAVED_URL", clvxcov)
                 qposdlkkd.apply()

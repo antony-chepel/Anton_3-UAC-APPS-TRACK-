@@ -1,12 +1,20 @@
 package com.skgames.trafficridert.utils
 
+import android.os.Build
+
 object Constance {
-    val bnbnbnbnudsfsdf = "sub_id_6="
-    val zoxpcl = "ad_id="
-    val rdtdsy = "sub_id_1="
-    val zloxp = "sub_id_5="
-    val wsoodsdp = "sub_id_4="
-    val blovcblbpblplvb = "naming"
-    val jnuasdh = "deviceID="
-    val wokkodakopskodp = "com.skgames.trafficridert"
+
+    val one = "deviceID="
+    val subOne = "sub_id_1="
+    val thrhtrhtrhtrht = "ad_id="
+    val fofofofofofofofofo = "sub_id_4="
+    val fififififififififif = "sub_id_5="
+    val sisisisifsisis = "sub_id_6="
+
+
+    val lololololololo = "naming"
+    val trololo = "deeporg"
+
+
+    val kiokjjlikjhmkij = Build.VERSION.RELEASE
 }

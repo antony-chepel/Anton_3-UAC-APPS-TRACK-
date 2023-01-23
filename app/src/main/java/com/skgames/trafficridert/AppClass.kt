@@ -1,6 +1,7 @@
 package com.skgames.trafficridert
 
 import android.app.Application
+import android.content.Context
 import com.my.tracker.MyTracker
 import com.onesignal.OneSignal
 import dagger.hilt.android.HiltAndroidApp
@@ -10,12 +11,12 @@ import java.util.*
 class AppClass : Application() {
     companion object {
         const val oneSignal = "abcf9f6f-4a8b-4587-8844-b7ae50727876"
-        var eus: String? = ""
+        var eus: String? = "main_id"
         var link = "link"
         const val appsChecker = "appsChecker"
-        var awospdlsldxkkzc: String? = "instID"
-        const val tracker = "60804361398653608560"
-        var kdoslx: String? = "myID"
+        val myId: String = "myID"
+        var instId: String? = "instID"
+        var deep: String? = "d11"
         var weopslsamkx: String? = "c11"
 
 
@@ -28,25 +29,28 @@ class AppClass : Application() {
         OneSignal.initWithContext(this)
         OneSignal.setAppId(oneSignal)
 
-        val iowkd = getSharedPreferences("PREFS_NAME", 0)
-        val sharedInstId = getSharedPreferences(awospdlsldxkkzc, MODE_PRIVATE)
-        val sharedMyID = getSharedPreferences(kdoslx, MODE_PRIVATE)
-        val apsol = MyTracker.getTrackerParams()
-        val njicv = MyTracker.getTrackerConfig()
-        val yuirkkodfmovx = MyTracker.getInstanceId(this)
-        njicv.isTrackingLaunchEnabled = true
-        if (iowkd.getBoolean("my_first_time", true)) {
-            val hjmbv = UUID.randomUUID().toString()
-            apsol.setCustomUserId(hjmbv)
-            sharedMyID.edit().putString(kdoslx,hjmbv).apply()
-            sharedInstId.edit().putString(awospdlsldxkkzc,yuirkkodfmovx).apply()
-            iowkd.edit().putBoolean("my_first_time", false).apply()
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+        OneSignal.initWithContext(this)
+        OneSignal.setAppId(oneSignal)
 
+        val oicjicjxd = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+        val tifjjdfijidf = getSharedPreferences("PREFS_NAME", 0)
+
+        val oxkjicjxiz = MyTracker.getTrackerParams()
+        val psosloxkczjixjiz = MyTracker.getTrackerConfig()
+        val tiuhdsjifijsdfji = MyTracker.getInstanceId(this)
+        psosloxkczjixjiz.isTrackingLaunchEnabled = true
+        val siajddiasj = UUID.randomUUID().toString()
+
+        if (tifjjdfijidf.getBoolean("my_first_time", true)) {
+            oxkjicjxiz.setCustomUserId(siajddiasj)
+            oicjicjxd.edit().putString(myId, siajddiasj).apply()
+            oicjicjxd.edit().putString(instId, tiuhdsjifijsdfji).apply()
+            tifjjdfijidf.edit().putBoolean("my_first_time", false).apply()
         } else {
-            val wosplx = sharedMyID.getString(kdoslx,"null")
-            apsol.setCustomUserId(wosplx)
+            val mcxivjivjxcjixcv = oicjicjxd.getString(myId, siajddiasj)
+            oxkjicjxiz.setCustomUserId(mcxivjivjxcjixcv)
         }
-        MyTracker.initTracker(tracker, this)
-
+        MyTracker.initTracker("68730396266309548180", this)
     }
 }
